@@ -34,6 +34,7 @@ function App() {
     return false;
   }
 
+  // render the app components
   return (
     <div className='App'>
       <header>
@@ -47,6 +48,7 @@ function App() {
       />
     </div>
   );
+
 }
 
 export default App;

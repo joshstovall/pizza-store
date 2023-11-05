@@ -1,21 +1,24 @@
 import { useEffect, useState } from 'react';
-import Grid from '@mui/material/Grid';
+import Pizza from './Pizza';
+
 import Container from '@mui/material/Container';
-import Pizza from './Pizza'
+import Grid from '@mui/material/Grid';
 
 const Pizzas = ({ pizzas, deleteCallback, editCallback }) => {
 
+  // keep track of current pizzas
   const [currentPizzas, setCurrentPizzas] = useState(pizzas)
 
+  // listen for pizzas to change
   useEffect(() => setCurrentPizzas(pizzas), [pizzas]);
 
+  // render the components
   return (
     <Container>
 
       <h2>Pizzas</h2>
 
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-
         {
           currentPizzas.length ?
             currentPizzas.map(
@@ -34,7 +37,6 @@ const Pizzas = ({ pizzas, deleteCallback, editCallback }) => {
               No pizzas exist. Click <b>Add New Pizza</b> to create a new pizza.
             </div>
         }
-
       </Grid>
 
     </Container>

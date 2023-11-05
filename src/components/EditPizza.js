@@ -1,47 +1,48 @@
 import { useState } from 'react';
-import availableToppings from '../const/availableToppings'
+import availableToppings from '../const/availableToppings';
+
+import Autocomplete from '@mui/material/Autocomplete';
 import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import Checkbox from '@mui/material/Checkbox';
 import Chip from '@mui/material/Chip';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
 
 const EditPizza = ({ id, name, size, toppings, saveCallback }) => {
 
+  // open or close dialog state
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  // keep track of updated input values
   const [_name, setName] = useState(name);
   const [_size, setSize] = useState(size);
   const [_toppings, setToppings] = useState(toppings);
 
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
+  // handle value updates
   const handleChangeName = (event) => setName(event.target.value);
   const handleChangeSize = (event) => setSize(event.target.value);
   const handleChangeToppings = (event, value) => setToppings(value);
 
-
+  // save the edited pizza
   const handleSave = () => {
 
     // validate that there are no empty fields
     if (!_name || !_size || !_toppings.length)
       return alert('Check that your pizza has a name, size, and at least one topping.')
 
-    console.log(id, 'id')
-
-
+    // create updated pizza object
     let updatedPizza = {
       id,
       name: _name,
@@ -49,6 +50,7 @@ const EditPizza = ({ id, name, size, toppings, saveCallback }) => {
       toppings: _toppings
     };
 
+    // check for duplicate pizzas
     if (window.pizzaExists(updatedPizza)) {
       alert('Duplicate pizza already exists')
     }
@@ -62,7 +64,7 @@ const EditPizza = ({ id, name, size, toppings, saveCallback }) => {
     }
   };
 
-
+  // render the components
   return (
     <>
 
@@ -78,6 +80,7 @@ const EditPizza = ({ id, name, size, toppings, saveCallback }) => {
         <DialogTitle>
           Edit pizza below 🍕
         </DialogTitle>
+
         <DialogContent>
 
           <br />
@@ -138,7 +141,6 @@ const EditPizza = ({ id, name, size, toppings, saveCallback }) => {
               ));
             }}
           />
-
 
         </DialogContent>
 
